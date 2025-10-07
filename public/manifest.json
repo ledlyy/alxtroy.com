@@ -1,0 +1,10 @@
+{
+  "name": "Ledlyy Web Template",
+  "short_name": "Ledlyy",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0078FF",
+  "icons": []
+}
+

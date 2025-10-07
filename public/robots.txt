@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Use relative Sitemap so it works across environments
+Sitemap: /sitemap.xml

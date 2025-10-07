@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "liga" 1, "kern" 1;
+    min-height: 100vh;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-serif);
+    letter-spacing: -0.02em;
+    @apply text-foreground;
+  }
+
+  p {
+    @apply leading-relaxed text-base text-foreground;
+  }
+
+  a {
+    color: rgb(var(--link));
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+    transition: color 150ms ease, text-decoration-color 150ms ease;
+  }
+
+  a:hover {
+    color: color-mix(in oklab, var(--accent-hex) 75%, black);
+    text-decoration-color: color-mix(in oklab, var(--accent-hex) 40%, transparent);
+  }
+
+  strong {
+    @apply text-foreground font-semibold;
+  }
+
+  button {
+    font-family: inherit;
+  }
+
+  img, svg, video {
+    max-width: 100%;
+    height: auto;
+  }
+
+  input, textarea, select {
+    @apply bg-background text-foreground placeholder:text-muted;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: color-mix(in oklab, var(--accent-hex) 35%, #d1d5db);
+    border-radius: 999px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+}
+
+/* Print-friendly adjustments */
+@media print {
+  header,
+  footer,
+  nav,
+  .no-print {
+    display: none !important;
+  }
+  main {
+    padding: 0 !important;
+  }
+}

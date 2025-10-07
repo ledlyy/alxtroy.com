@@ -1,0 +1,15 @@
+{
+  "prerender": [
+    {
+      "where": { "and": [{ "href_matches": "/(about|services|pricing|contact|blog)(/.*)?$" }] },
+      "eagerness": "moderate"
+    }
+  ],
+  "prefetch": [
+    {
+      "where": { "and": [{ "selector_matches": "a[href]" }] },
+      "eagerness": "moderate"
+    }
+  ]
+}
+

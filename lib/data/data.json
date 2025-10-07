@@ -1,0 +1,141 @@
+{
+  "event": {
+    "title": "İKMİB-USA Plastic Kitchenware & Houseware",
+    "startDate": "2025-11-11T09:00:00-05:00",
+    "endDate": "2025-11-15T17:00:00-05:00",
+    "location": "Harmony Suites – Elegant All-Suites Hotel near Meadowlands",
+    "status": "to be confirmed",
+    "organizer": "İKMİB"
+  },
+  "companies": [
+    {
+      "id": "adeon-dis-ticaret-limited-sirketi",
+      "name": "Adeon Dış Ticaret Limited Şirketi",
+      "categories": ["Glass And Plastic Household Items"],
+      "brochure": "https://www.messagetosend.com/assets/cf51/formUploads/bc5zfq5y638919779524183828.pdf",
+      "website": "www.adeonglobal.com"
+    },
+    {
+      "id": "ay-silikon-ve-plastik-sanayi-ticaret-ltd-sti",
+      "name": "Ay Silikon ve Plastik Sanayi Ticaret Ltd Şti.",
+      "categories": [
+        "Plasticware Household Items",
+        "Plastic Kitchenware Items",
+        "Plastic Tableware Items",
+        "Plastic Organizers"
+      ],
+      "brochure": "https://www.messagetosend.com/assets/cf51/formUploads/y2qofpsu638918188261226408.pdf",
+      "website": "https://www.softchef.com.tr/softchef-katalog-2025.pdf"
+    },
+    {
+      "id": "dunya-plastik-san-ve-tic-ltd-sti",
+      "name": "Dünya Plastik San ve Tic Ltd Şti",
+      "categories": [
+        "Plastic Household Products",
+        "Plastic Kitchenware Products"
+      ],
+      "brochure": "https://www.messagetosend.com/assets/cf51/formUploads/xqakp4su638918280547374142.pdf",
+      "website": "www.dunyaplastik.com"
+    },
+    {
+      "id": "elifplas-plastik-sanayi-ve-ticaret-limited-sirketi",
+      "name": "Elifplas Plastik Sanayi ve Ticaret Limited Şirketi",
+      "categories": [
+        "Laundry Baskets & Hampers",
+        "Storage Boxes & Organizers",
+        "Drawer Units",
+        "Shoe Racks & Holders",
+        "Planters & Flower Pots",
+        "Kitchenware & Household Accessories"
+      ],
+      "brochure": "https://www.messagetosend.com/assets/cf51/formUploads/q5ntkhvb638919881808091590.pdf",
+      "website": "www.elifplastic.com"
+    },
+    {
+      "id": "esda-canta-hediyelik-tic-ltd-sti",
+      "name": "Esda Çanta Hediyelik Tic Ltd Şti",
+      "categories": [
+        "Make Up Organizers",
+        "Bathroom Organizers",
+        "Kitchen Items",
+        "Bamboo Items"
+      ],
+      "brochure": "https://www.messagetosend.com/assets/cf51/formUploads/vlrw0u3r638919973495508850.pdf",
+      "website": "www.esdastore.com.tr"
+    },
+    {
+      "id": "gul-plastik-ith-ihr-san-ve-tic-ltd-sti",
+      "name": "Gül Plastik İth. İhr. San. ve Tic. Ltd Şti.",
+      "categories": ["Household Items"],
+      "brochure": "https://www.messagetosend.com/assets/cf51/formUploads/e42jepex638919037095608205.pdf",
+      "website": "gulplastik.com"
+    },
+    {
+      "id": "kastamonu-plastik-sanayi-ve-ticaret-limited-sirketi",
+      "name": "Kastamonu Plastik Sanayi ve Ticaret Limited Şirketi",
+      "categories": [
+        "Plastic Household Goods",
+        "Plastic Garden Furnıture",
+        "Plastic Industrıal Products"
+      ],
+      "brochure": "https://www.messagetosend.com/assets/cf51/formUploads/3haxpott638919975818910229.pdf",
+      "website": "https://kastamonuplastik.com/"
+    },
+    {
+      "id": "meysa-home-zuccaciye-plastik-as",
+      "name": "Meysa Home Züccaciye Plastik A.Ş.",
+      "categories": ["Water Bottles", "Lunch Boxes", "Food Plates"],
+      "brochure": "https://www.messagetosend.com/assets/cf51/formUploads/2dj4hm0f638918258861782699.pdf",
+      "website": "www.meysahome.com"
+    },
+    {
+      "id": "omak-dis-ticaret-as",
+      "name": "Omak Dış Ticaret A.Ş.",
+      "categories": [
+        "Plastic Kitchenware Items",
+        "Plastic Clothes Hangers",
+        "Ironing Board Covers",
+        "Bathroom Accesories"
+      ],
+      "brochure": "https://www.messagetosend.com/assets/cf51/formUploads/pj11s0hz638919126085153437.pdf",
+      "website": "www.decobella.com.tr, www.omak.com.tr"
+    },
+    {
+      "id": "sakarya-plastik-san-ve-tic-ltd-sti",
+      "name": "Sakarya Plastik San. ve Tic. Ltd. Şti",
+      "categories": [
+        "Plastic Laundry Hampers",
+        "Plastic Laundry Baskets",
+        "Plastic Organizers",
+        "Plastic Boxes",
+        "Plastic Pedal Dustbins",
+        "Plastic Dustbins",
+        "Plastic Stools & Tables"
+      ],
+      "brochure": "https://www.messagetosend.com/assets/cf51/formUploads/zeixcpx4638919990432261954.pdf",
+      "website": "www.sakaryaplastik.com.tr"
+    },
+    {
+      "id": "sun-plastik-ev-gerecleri",
+      "name": "Sun Plastik Ev Gereçleri",
+      "categories": ["Kitchenware Goods (Plastıcware, Small Metal Kitchen Appliances)"],
+      "brochure": "https://www.messagetosend.com/assets/cf51/formUploads/litdlc1x638918192272696616.pdf",
+      "website": "www.sunplastik.com.tr"
+    },
+    {
+      "id": "urve-plastik-sanayi-ve-ticaret-limited-sirketi",
+      "name": "Urve Plastik Sanayi ve Ticaret Limited Şirketi",
+      "categories": ["Plastic Kitchenware Houseware"],
+      "brochure": "https://www.messagetosend.com/assets/cf51/formUploads/eidrod3j638918392956282104.pdf",
+      "website": "www.urveplastik.com"
+    },
+    {
+      "id": "ucsan-plastik-ve-kalip-san-ve-tic-ltd-sti",
+      "name": "Üçsan Plastik ve Kalıp San. ve Tic. Ltd. Şti.",
+      "categories": ["Plastic Household Articles and Pots"],
+      "brochure": "https://www.messagetosend.com/assets/cf51/formUploads/xcosc0zc638918245889326489.pdf",
+      "website": "https://ucsan.com.tr"
+    }
+  ]
+}
+
