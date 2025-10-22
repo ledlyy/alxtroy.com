@@ -39,14 +39,14 @@ export function Header() {
         {/* Logo */}
         <Link
           href="/"
-          className="critical-logo group relative flex shrink-0 items-center gap-3 rounded-lg px-2 py-1.5 transition-all hover:bg-accent/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+          className="critical-logo group relative flex shrink-0 items-center gap-3 rounded-xl px-2 py-1.5 transition-all hover:bg-accent/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
         >
-          <div className="relative h-12 w-12 rounded-xl transition-transform group-hover:scale-105 sm:h-14 sm:w-14">
+          <div className="relative h-12 w-12 overflow-hidden rounded-xl shadow-sm transition-transform group-hover:scale-105 sm:h-14 sm:w-14">
             <Image
-              src="/logo/mark.svg"
+              src="/web_logo3.jpg"
               alt="Alexander & Troy Tours Logo"
               fill
-              className="object-contain"
+              className="object-cover"
               priority
             />
           </div>
@@ -54,7 +54,7 @@ export function Header() {
             <span className="text-base font-bold leading-tight text-foreground lg:text-lg">
               Alexander & Troy Tours
             </span>
-            <span className="text-xs text-muted">Receptive Services</span>
+            <span className="text-muted-foreground text-xs">Receptive Services</span>
           </div>
         </Link>
 
@@ -100,12 +100,13 @@ export function Header() {
           </button>
           <Link
             href="/contact"
-            className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-[rgb(var(--accent-fg))] shadow-md transition-all hover:shadow-lg hover:brightness-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+            className="group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-accent via-accent-600 to-accent-700 px-6 py-2.5 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-accent/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
           >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <span className="absolute inset-0 bg-gradient-to-r from-accent-700 to-accent-600 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+            <svg className="relative z-10" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
             </svg>
-            Contact us
+            <span className="relative z-10">Contact Us</span>
           </Link>
         </div>
 
@@ -179,12 +180,13 @@ export function Header() {
           <div className="mt-6 space-y-3 border-t border-border/40 pt-6">
             <Link
               href="/contact"
-              className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-6 py-4 text-base font-semibold text-[rgb(var(--accent-fg))] shadow-md transition-all hover:shadow-lg hover:brightness-95"
+              className="group relative flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl bg-gradient-to-r from-accent via-accent-600 to-accent-700 px-6 py-4 text-base font-semibold text-white shadow-md transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:shadow-accent/30"
             >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <span className="absolute inset-0 bg-gradient-to-r from-accent-700 to-accent-600 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+              <svg className="relative z-10" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
               </svg>
-              Contact us
+              <span className="relative z-10">Contact Us</span>
             </Link>
           </div>
         </nav>

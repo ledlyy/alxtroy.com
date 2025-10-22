@@ -56,7 +56,7 @@ export function middleware(req: NextRequest) {
     "base-uri 'self'",
     `frame-ancestors ${isPdf ? "'self'" : "'none'"}`,
     `script-src 'self' 'nonce-${nonce}' 'strict-dynamic' ${gtm} ${ga} ${gmapsApi}`,
-    "style-src 'self' 'nonce-${nonce}'",
+    `style-src 'self' 'unsafe-inline' 'nonce-${nonce}'`,
     "font-src 'self' data:",
     `connect-src 'self' ${ga} https://region1.google-analytics.com https://stats.g.doubleclick.net ${gtm} ${gmapsApi}`,
     `img-src 'self' data: ${ga} https://region1.google-analytics.com ${gmapsApi} https://images.unsplash.com https://logo.clearbit.com https://res.cloudinary.com`,
@@ -65,8 +65,6 @@ export function middleware(req: NextRequest) {
     "form-action 'self'",
     "manifest-src 'self'",
     "worker-src 'self' blob:",
-    "trusted-types app-default",
-    "require-trusted-types-for 'script'",
   ].join('; ')
 
   res.headers.set('Content-Security-Policy', csp)
