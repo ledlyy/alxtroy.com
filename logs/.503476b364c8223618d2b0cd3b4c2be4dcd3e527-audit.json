@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 30
+    },
+    "auditLog": "/Users/ibrahimyasin/Desktop/alxtroy.com/logs/.503476b364c8223618d2b0cd3b4c2be4dcd3e527-audit.json",
+    "files": [
+        {
+            "date": 1760393550399,
+            "name": "/Users/ibrahimyasin/Desktop/alxtroy.com/logs/app-2025-10-14.log",
+            "hash": "1e2229c694ae1d61581803ddf6e98f7c3d01a993805d146ac6d8e5ef4cd07f18"
+        }
+    ],
+    "hashType": "sha256"
+}

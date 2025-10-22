@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
+import { StructuredData } from '@/components/StructuredData'
+
 import { siteConfig } from '@/lib/config/site'
 import { buildBreadcrumbSchema, buildDestinationPlaceSchema, buildMetadata } from '@/lib/seo'
 
@@ -44,7 +46,7 @@ export default async function DestinationDetailPage({ params }: { params: Promis
       <section className="border-b bg-surface">
         <div className="container mx-auto px-4 py-12">
           <div className="max-w-3xl space-y-4">
-            <span className="text-xs font-semibold uppercase tracking-[0.3em] text-accent/80">{destination.region}</span>
+            <span className="text-xs font-semibold uppercase tracking-[0.3em] text-accent-700">{destination.region}</span>
             <h1 className="text-4xl font-semibold text-foreground">{destination.name}</h1>
             <p className="text-base text-muted">{destination.summary}</p>
             <Link
@@ -78,20 +80,16 @@ export default async function DestinationDetailPage({ params }: { params: Promis
         Back to destinations
       </Link>
 
-      <script
-        type="application/ld+json"
-        suppressHydrationWarning
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify([
-            breadcrumb,
-            buildDestinationPlaceSchema({
-              slug: destination.slug,
-              name: destination.name,
-              region: destination.region,
-              description: destination.summary,
-            }),
-          ]),
-        }}
+      <StructuredData
+        data={[
+          breadcrumb,
+          buildDestinationPlaceSchema({
+            slug: destination.slug,
+            name: destination.name,
+            region: destination.region,
+            description: destination.summary,
+          }),
+        ]}
       />
     </div>
   )

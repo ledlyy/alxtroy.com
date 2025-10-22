@@ -1,14 +1,16 @@
 import type { Metadata } from 'next'
-import '@/styles/globals.css'
-import '@/styles/theme.css'
-import { Inter } from 'next/font/google'
-import { cookies } from 'next/headers'
+import { Inter, Plus_Jakarta_Sans } from 'next/font/google'
+import { cookies, headers } from 'next/headers'
+import { readFileSync } from 'node:fs'
+import path from 'node:path'
 
 import { AnalyticsBridge } from '@/components/AnalyticsBridge'
 import { CookieConsent } from '@/components/CookieConsent'
 import { Footer } from '@/components/Footer'
 import { Header } from '@/components/Header'
+import { StructuredData } from '@/components/StructuredData'
 import { ThemeColorMeta } from '@/components/ThemeColorMeta'
+import { TrustedTypesPolicy } from '@/components/TrustedTypesPolicy'
 
 import { siteConfig } from '@/lib/config/site'
 import { getLocaleFromString } from '@/lib/i18n/dictionaries'
@@ -17,7 +19,26 @@ import { buildOrganizationSchema, buildLocalBusinessSchema } from '@/lib/seo'
 
 import { Providers } from './providers'
 
-const inter = Inter({ subsets: ['latin'], display: 'swap' })
+const criticalCss = readFileSync(path.join(process.cwd(), 'app/_critical.css'), 'utf8')
+const loadNonCriticalCssScript = `
+  (function loadStyles(){
+    if (window.__alxtroyStylesLoaded) return;
+    window.__alxtroyStylesLoaded = true;
+    var link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = '/styles/app.css';
+    link.media = 'all';
+    document.head.appendChild(link);
+  }());
+`
+
+const inter = Inter({ subsets: ['latin'], display: 'swap', variable: '--font-sans-base' })
+const plusJakarta = Plus_Jakarta_Sans({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  display: 'swap',
+  variable: '--font-display',
+})
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -57,18 +78,29 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const cookieStore = await cookies()
+  const headerList = await headers()
+  const nonce = headerList.get('x-nonce') ?? undefined
   const cookieLocale = getLocaleFromString(cookieStore.get('hl')?.value)
   const dict = getDictionary(cookieLocale)
   return (
-    <html lang={cookieLocale || siteConfig.defaultLocale} suppressHydrationWarning>
+    <html lang={cookieLocale || siteConfig.defaultLocale} suppressHydrationWarning data-csp-nonce={nonce}>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="manifest" href="/manifest.webmanifest" />
         <link rel="speculationrules" href="/speculation-rules.json" />
+        <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://www.google-analytics.com" crossOrigin="anonymous" />
+        <link rel="preload" as="style" href="/styles/app.css" />
+        <style nonce={nonce ?? undefined} dangerouslySetInnerHTML={{ __html: criticalCss }} />
+        <script nonce={nonce ?? undefined} dangerouslySetInnerHTML={{ __html: loadNonCriticalCssScript }} />
+        <noscript>
+          <link rel="stylesheet" href="/styles/app.css" />
+        </noscript>
       </head>
-      <body className={`${inter.className} bg-background text-foreground`}>
+      <body className={`bg-background font-sans text-foreground ${inter.variable} ${plusJakarta.variable}`}>
         <Providers>
           <AnalyticsBridge />
+          <TrustedTypesPolicy />
           <ThemeColorMeta />
           <a
             href="#main-content"
@@ -81,14 +113,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             {children}
           </main>
           <Footer />
-          {/* Organization schema for global trust */}
-          <script
-            type="application/ld+json"
-            suppressHydrationWarning
-            dangerouslySetInnerHTML={{
-              __html: JSON.stringify([buildOrganizationSchema(), buildLocalBusinessSchema()]),
-            }}
-          />
+          <StructuredData data={[buildOrganizationSchema(), buildLocalBusinessSchema()]} />
           <CookieConsent />
         </Providers>
       </body>

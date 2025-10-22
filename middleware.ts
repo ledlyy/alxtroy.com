@@ -1,11 +1,14 @@
 import { NextResponse, type NextRequest } from 'next/server'
 
+import { logRequest, logResponse } from './lib/logger'
+
 function generateNonce() {
   // randomUUID is supported in Edge runtime and sufficient for nonce
   return crypto.randomUUID().replace(/-/g, '')
 }
 
 export function middleware(req: NextRequest) {
+  const startTime = Date.now()
   const nonce = generateNonce()
 
   const requestHeaders = new Headers(req.headers)
@@ -13,6 +16,18 @@ export function middleware(req: NextRequest) {
   requestHeaders.set('x-nonce', nonce)
 
   const url = new URL(req.url)
+
+  // Log incoming request
+  logRequest({
+    method: req.method,
+    url: url.pathname + url.search,
+    headers: {
+      'user-agent': req.headers.get('user-agent') || 'unknown',
+      'referer': req.headers.get('referer') || undefined,
+    },
+    ip: req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip') || 'unknown',
+  })
+
   const res = NextResponse.next({ request: { headers: requestHeaders } })
 
   // Locale persistence: if ?hl= is present, set a cookie for subsequent navigations
@@ -41,23 +56,35 @@ export function middleware(req: NextRequest) {
     "base-uri 'self'",
     `frame-ancestors ${isPdf ? "'self'" : "'none'"}`,
     `script-src 'self' 'nonce-${nonce}' 'strict-dynamic' ${gtm} ${ga} ${gmapsApi}`,
-    `connect-src 'self' ${ga}`,
-    `img-src 'self' data: ${ga} ${gmapsApi}`,
-    "style-src 'self' 'unsafe-inline'",
+    "style-src 'self' 'nonce-${nonce}'",
     "font-src 'self' data:",
-    // Allow embedding Google Maps iframes securely
+    `connect-src 'self' ${ga} https://region1.google-analytics.com https://stats.g.doubleclick.net ${gtm} ${gmapsApi}`,
+    `img-src 'self' data: ${ga} https://region1.google-analytics.com ${gmapsApi} https://images.unsplash.com https://logo.clearbit.com https://res.cloudinary.com`,
     `frame-src 'self' ${gmaps}`,
+    "object-src 'none'",
+    "form-action 'self'",
+    "manifest-src 'self'",
+    "worker-src 'self' blob:",
+    "trusted-types app-default",
+    "require-trusted-types-for 'script'",
   ].join('; ')
 
   res.headers.set('Content-Security-Policy', csp)
-  // Keep Trusted Types in report-only (does not block UI). You can
-  // switch to enforcing once all sinks create TrustedHTML via a policy.
-  res.headers.set('Content-Security-Policy-Report-Only', "require-trusted-types-for 'script'")
+  res.headers.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload')
+  res.headers.set('Cross-Origin-Opener-Policy', 'same-origin')
   res.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin')
   res.headers.set('X-Content-Type-Options', 'nosniff')
   // Let PDFs be framed on same-origin pages; deny framing elsewhere
   res.headers.set('X-Frame-Options', isPdf ? 'SAMEORIGIN' : 'DENY')
   res.headers.set('Permissions-Policy', 'geolocation=(), camera=(), microphone=(), interest-cohort=()')
+
+  // Log response
+  const duration = Date.now() - startTime
+  logResponse(
+    { method: req.method, url: url.pathname + url.search },
+    { status: res.status },
+    duration
+  )
 
   return res
 }

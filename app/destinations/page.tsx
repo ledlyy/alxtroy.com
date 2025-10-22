@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 
+import { StructuredData } from '@/components/StructuredData'
+
 import { siteConfig } from '@/lib/config/site'
 import { buildBreadcrumbSchema, buildMetadata } from '@/lib/seo'
 
@@ -22,7 +24,7 @@ export default function DestinationsPage() {
     <div className="space-y-12 pb-20">
       <section className="container mx-auto px-4">
         <div className="rounded-3xl border bg-surface px-8 py-12 shadow-soft">
-          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-accent/80">Destinations</p>
+          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-accent-700">Destinations</p>
           <h1 className="mt-4 text-4xl font-semibold text-foreground">Every journey begins with local knowledge</h1>
           <p className="mt-6 text-base text-muted">
             Alexander and Troy Tours operates receptive services across the Americas, supporting programmes from Latin America to North America and island destinations.
@@ -35,7 +37,7 @@ export default function DestinationsPage() {
           <article key={destination.slug} className="rounded-3xl border bg-surface px-8 py-10 shadow-soft">
             <div className="flex items-baseline justify-between gap-4">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.3em] text-accent/80">{destination.region}</p>
+                <p className="text-xs font-semibold uppercase tracking-[0.3em] text-accent-700">{destination.region}</p>
                 <h2 className="mt-3 text-3xl font-semibold text-foreground">{destination.name}</h2>
               </div>
               <Link
@@ -51,11 +53,7 @@ export default function DestinationsPage() {
         ))}
       </section>
 
-      <script
-        type="application/ld+json"
-        suppressHydrationWarning
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
-      />
+      <StructuredData data={breadcrumb} />
     </div>
   )
 }

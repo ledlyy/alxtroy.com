@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
+import { StructuredData } from '@/components/StructuredData'
+
 import { siteConfig } from '@/lib/config/site'
 import { getPost, getPosts } from '@/lib/data/posts'
 import { buildBlogPostingSchema, buildBreadcrumbSchema, buildMetadata } from '@/lib/seo'
@@ -38,22 +40,13 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
   return (
     <article className="prose prose-neutral mx-auto max-w-3xl px-4 py-16 dark:prose-invert">
-      <p className="text-sm font-semibold uppercase tracking-[0.3em] text-accent/80">Insights</p>
+      <p className="text-sm font-semibold uppercase tracking-[0.3em] text-accent-700">Insights</p>
       <h1 className="text-4xl font-semibold leading-tight text-foreground">{post.title}</h1>
       <p className="text-sm text-muted">
         {new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
       </p>
       <div className="mt-6">{post.content}</div>
-      <script
-        type="application/ld+json"
-        suppressHydrationWarning
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify([
-            breadcrumb,
-            buildBlogPostingSchema(post),
-          ]),
-        }}
-      />
+      <StructuredData data={[breadcrumb, buildBlogPostingSchema(post)]} />
     </article>
   )
 }

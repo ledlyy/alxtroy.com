@@ -31,16 +31,19 @@ export function Header() {
   }
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border/40 bg-background/95 shadow-sm backdrop-blur-md supports-[backdrop-filter]:bg-background/80" role="banner">
-      <div className="mx-auto flex h-20 items-center justify-between gap-4 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
+    <header
+      className="critical-header sticky top-0 z-50 border-b border-border/40 bg-background/95 shadow-sm backdrop-blur-md supports-[backdrop-filter]:bg-background/80"
+      role="banner"
+    >
+      <div className="critical-header-inner mx-auto flex h-20 items-center justify-between gap-4 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
         {/* Logo */}
         <Link
           href="/"
-          className="group relative flex shrink-0 items-center gap-3 rounded-lg px-2 py-1.5 transition-all hover:bg-accent/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+          className="critical-logo group relative flex shrink-0 items-center gap-3 rounded-lg px-2 py-1.5 transition-all hover:bg-accent/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
         >
-          <div className="relative h-12 w-12 overflow-hidden rounded-lg bg-surface shadow-sm transition-transform group-hover:scale-105 sm:h-14 sm:w-14">
+          <div className="relative h-12 w-12 rounded-xl transition-transform group-hover:scale-105 sm:h-14 sm:w-14">
             <Image
-              src="/web_logo3.jpg"
+              src="/logo/mark.svg"
               alt="Alexander & Troy Tours Logo"
               fill
               className="object-contain"

@@ -1,3 +1,5 @@
+@import './theme.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -9,30 +11,72 @@
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-feature-settings: "liga" 1, "kern" 1;
+    font-feature-settings: "liga" 1, "kern" 1, "calt" 1;
     min-height: 100vh;
+    overflow-x: hidden;
+    background-image: radial-gradient(circle at 20% 20%, rgba(var(--accent-light), 0.08), transparent 55%),
+      radial-gradient(circle at 85% 10%, rgba(var(--accent), 0.07), transparent 60%);
+    background-repeat: no-repeat;
+    background-size: 160% 160%, 120% 120%;
   }
 
-  h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-serif);
-    letter-spacing: -0.02em;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-heading);
+    letter-spacing: -0.04em;
     @apply text-foreground;
+    line-height: 1.12;
+    font-weight: 700;
+  }
+
+  h1 {
+    font-size: var(--text-5xl);
+  }
+
+  h2 {
+    font-size: var(--text-4xl);
+  }
+
+  h3 {
+    font-size: var(--text-3xl);
+  }
+
+  h4 {
+    font-size: var(--text-2xl);
+  }
+
+  h5 {
+    font-size: var(--text-xl);
+  }
+
+  h6 {
+    font-size: var(--text-lg);
   }
 
   p {
-    @apply leading-relaxed text-base text-foreground;
+    @apply leading-relaxed text-muted;
+    font-size: var(--text-base);
+    max-width: 75ch;
   }
 
   a {
     color: rgb(var(--link));
     text-decoration-thickness: 2px;
     text-underline-offset: 4px;
-    transition: color 150ms ease, text-decoration-color 150ms ease;
+    transition: color var(--transition-fast), text-decoration-color var(--transition-fast), transform var(--transition-fast);
   }
 
   a:hover {
     color: color-mix(in oklab, var(--accent-hex) 75%, black);
     text-decoration-color: color-mix(in oklab, var(--accent-hex) 40%, transparent);
+  }
+
+  a:focus-visible {
+    @apply ring-2 ring-accent ring-offset-2 rounded;
   }
 
   strong {
@@ -41,35 +85,241 @@
 
   button {
     font-family: inherit;
+    cursor: pointer;
   }
 
-  img, svg, video {
+  button:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  img,
+  svg,
+  video {
     max-width: 100%;
     height: auto;
+    display: block;
   }
 
-  input, textarea, select {
+  img {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+
+  input,
+  textarea,
+  select {
     @apply bg-background text-foreground placeholder:text-muted;
+    font-size: var(--text-base);
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
   }
 
-  ::-webkit-scrollbar-thumb {
-    background-color: color-mix(in oklab, var(--accent-hex) 35%, #d1d5db);
-    border-radius: 999px;
+  input:focus,
+  textarea:focus,
+  select:focus {
+    @apply ring-2 ring-accent border-accent;
+    outline: none;
   }
 
-  ::-webkit-scrollbar-track {
-    background-color: transparent;
+  /* Form validation states */
+  input:invalid:not(:placeholder-shown),
+  textarea:invalid:not(:placeholder-shown) {
+    @apply border-danger;
+  }
+
+  input:valid:not(:placeholder-shown),
+  textarea:valid:not(:placeholder-shown) {
+    @apply border-success;
+  }
+}
+
+/* Modern utility classes */
+@layer utilities {
+
+  /* Container queries support */
+  .container-normal {
+    container-type: normal;
+  }
+
+  .container-inline-size {
+    container-type: inline-size;
+  }
+
+  /* Text balance for headlines */
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Text pretty for paragraphs */
+  .text-pretty {
+    text-wrap: pretty;
+  }
+
+  /* Smooth scrolling for anchor links */
+  .scroll-smooth {
+    scroll-behavior: smooth;
+  }
+
+  /* Gradient text */
+  .gradient-text {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg,
+        rgb(var(--accent)),
+        rgb(var(--accent-light)));
+  }
+
+  /* Card hover effect */
+  .card-hover {
+    @apply transition-all duration-300;
+  }
+
+  .card-hover:hover {
+    @apply -translate-y-1;
+    box-shadow: var(--shadow-xl);
+  }
+
+  /* Button variants */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-all;
+    @apply bg-primary text-[rgb(var(--accent-fg))];
+    background-image: linear-gradient(135deg, rgb(var(--accent)) 0%, rgb(var(--accent-light)) 100%);
+    box-shadow: 0 20px 35px rgba(163, 133, 85, 0.2);
+  }
+
+  .btn-primary:hover:not(:disabled) {
+    @apply brightness-[0.98];
+    box-shadow: 0 26px 45px rgba(163, 133, 85, 0.24);
+    transform: translateY(-1px);
+  }
+
+  .btn-primary:active:not(:disabled) {
+    transform: translateY(0);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border-2 border-border px-6 py-3 text-sm font-semibold transition-all;
+    color: rgb(var(--fg));
+    background-color: rgb(var(--bg));
+    box-shadow: inset 0 0 0 1px rgba(var(--border), 0.45);
+  }
+
+  .btn-secondary:hover:not(:disabled) {
+    @apply border-transparent;
+    color: rgb(var(--accent));
+    background-color: rgba(var(--accent), 0.12);
+    box-shadow: inset 0 0 0 1px rgba(var(--accent), 0.25);
+    transform: translateY(-1px);
+  }
+
+  .btn-secondary:focus-visible {
+    @apply ring-2 ring-accent ring-offset-2 ring-offset-background;
+  }
+
+  /* Modern glass card */
+  .glass-card {
+    background: linear-gradient(160deg,
+        rgba(var(--bg-glass), 0.92) 0%,
+        rgba(var(--accent-muted), 0.12) 100%);
+    backdrop-filter: blur(18px) saturate(170%);
+    -webkit-backdrop-filter: blur(18px) saturate(170%);
+    border: 1px solid rgba(var(--border), 0.35);
+    box-shadow: 0 30px 60px rgba(15, 23, 42, 0.12);
+  }
+
+  /* Animated gradient background */
+  .animated-gradient {
+    background: linear-gradient(-45deg,
+        rgb(var(--accent)),
+        rgb(var(--accent-light)),
+        rgb(var(--accent)),
+        rgb(var(--accent-light)));
+    background-size: 400% 400%;
+    animation: gradient-shift 15s ease infinite;
+  }
+
+  @keyframes gradient-shift {
+
+    0%,
+    100% {
+      background-position: 0% 50%;
+    }
+
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+
+  /* Shimmer effect for loading states */
+  .shimmer {
+    background: linear-gradient(90deg,
+        rgba(var(--muted), 0.1) 0%,
+        rgba(var(--muted), 0.3) 50%,
+        rgba(var(--muted), 0.1) 100%);
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+
+    100% {
+      background-position: 200% 0;
+    }
+  }
+
+  /* Content reveal animation */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @keyframes reveal {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Stagger children animations */
+  .stagger>* {
+    animation: reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+  }
+
+  .stagger>*:nth-child(1) {
+    animation-delay: 0.1s;
+  }
+
+  .stagger>*:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+
+  .stagger>*:nth-child(3) {
+    animation-delay: 0.3s;
+  }
+
+  .stagger>*:nth-child(4) {
+    animation-delay: 0.4s;
+  }
+
+  .stagger>*:nth-child(5) {
+    animation-delay: 0.5s;
   }
 }
 
 /* Print-friendly adjustments */
 @media print {
+
   header,
   footer,
   nav,
   .no-print {
     display: none !important;
   }
+
   main {
     padding: 0 !important;
   }

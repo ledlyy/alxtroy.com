@@ -5,6 +5,9 @@ export default defineConfig({
     environment: 'jsdom',
     globals: true,
     setupFiles: ['./vitest.setup.ts'],
+    include: ['tests/unit/**/*.test.{ts,tsx}', 'tests/unit/**/*.spec.{ts,tsx}'],
+    passWithNoTests: true,
+    exclude: ['**/tests/e2e/**', '**/playwright/**'],
     coverage: {
       reporter: ['text', 'html'],
       thresholds: {

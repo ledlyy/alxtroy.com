@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 
+import { StructuredData } from '@/components/StructuredData'
+
 import { siteConfig } from '@/lib/config/site'
 import { getPosts } from '@/lib/data/posts'
 import { buildBreadcrumbSchema, buildMetadata } from '@/lib/seo'
@@ -114,7 +116,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
         <ul className="mt-6 space-y-4">
           {results.map((result) => (
             <li key={`${result.type}-${result.url}`} className="shadow-soft/40 rounded-2xl border bg-surface/80 p-6">
-              <span className="text-xs font-semibold uppercase tracking-[0.3em] text-accent/80">{result.type}</span>
+              <span className="text-xs font-semibold uppercase tracking-[0.3em] text-accent-700">{result.type}</span>
               <Link href={result.url} className="mt-2 block text-lg font-semibold text-foreground">
                 {result.title}
               </Link>
@@ -128,11 +130,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
           ) : null}
         </ul>
       </section>
-      <script
-        type="application/ld+json"
-        suppressHydrationWarning
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
-      />
+      <StructuredData data={breadcrumb} />
     </div>
   )
 }

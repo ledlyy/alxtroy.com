@@ -67,7 +67,7 @@ export function buildOrganizationSchema() {
     '@type': 'Organization',
     name: siteConfig.name,
     url: siteConfig.url,
-    logo: new URL('/web_logo3.jpg', siteConfig.url).toString(),
+    logo: new URL('/logo/mark.svg', siteConfig.url).toString(),
     sameAs: Object.values(siteConfig.socialLinks).filter(Boolean),
     contactPoint: siteConfig.brand.primaryContacts.map((contact) => ({
       '@type': 'ContactPoint',
@@ -95,7 +95,7 @@ export function buildLocalBusinessSchema() {
     '@type': 'LocalBusiness',
     name: siteConfig.name,
     url: siteConfig.url,
-    image: new URL('/web_logo3.jpg', siteConfig.url).toString(),
+    image: new URL('/logo/mark.svg', siteConfig.url).toString(),
     telephone: siteConfig.contact.phonePrimary,
     email: siteConfig.contact.email,
     address: {

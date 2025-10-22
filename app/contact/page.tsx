@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 
 import { ContactForm } from '@/components/ContactForm'
+import { StructuredData } from '@/components/StructuredData'
 
 import { siteConfig } from '@/lib/config/site'
 import { buildBreadcrumbSchema, buildMetadata } from '@/lib/seo'
@@ -88,14 +89,10 @@ export default function ContactPage() {
                 <strong className="font-semibold text-foreground">Note:</strong> We would be glad to assist you and respond in the shortest possible time with the alternatives that meet your needs.
               </p>
             </section>
-         </div>
-       </div>
-     </section>
-      <script
-        type="application/ld+json"
-        suppressHydrationWarning
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
-      />
+          </div>
+        </div>
+      </section>
+      <StructuredData data={breadcrumb} />
     </div>
   )
 }

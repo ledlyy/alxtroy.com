@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 
+import { StructuredData } from '@/components/StructuredData'
+
 import { siteConfig } from '@/lib/config/site'
 import { buildBreadcrumbSchema, buildMetadata } from '@/lib/seo'
 
@@ -22,7 +24,7 @@ export default function AboutPage() {
       <section className="container mx-auto px-4">
         <div className="grid items-start gap-10 rounded-3xl border bg-surface px-8 py-12 shadow-soft md:grid-cols-2">
           <div className="space-y-5">
-            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-accent/80">Our story</p>
+            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-accent-700">Our story</p>
             <h1 className="text-4xl font-semibold leading-tight">{companyStory.heading}</h1>
             <p className="text-lg text-muted">{companyStory.introduction}</p>
           </div>
@@ -88,11 +90,7 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-      <script
-        type="application/ld+json"
-        suppressHydrationWarning
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
-      />
+      <StructuredData data={breadcrumb} />
     </div>
   )
 }

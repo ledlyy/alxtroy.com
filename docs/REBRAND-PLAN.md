@@ -9,7 +9,7 @@
 
 ## Rebrand Objectives
 - Replace legacy event experience with Alexander & Troy Tours corporate site (Home, About, Services, MICE + subpages, Destinations, Gallery, References, Blog, Contact) using provided briefs.
-- Deliver white/near-white design system with logo secondary accent (falling back to `#0F62FE` until `public/web_logo3.jpg` or updated asset is supplied).
+- Deliver white/near-white design system with logo secondary accent (now sourced from `public/logo/mark.svg`).
 - Preserve App Router/i18n readiness; ensure TypeScript strict, lint clean; achieve Lighthouse ≥95/95/95/98.
 - Stand up modern SEO/a11y baseline: structured metadata, JSON-LD (Organization, Website, Breadcrumb, Services, Destinations, Articles), refreshed sitemap/robots/humans, consent-ready analytics, validated forms.
 
@@ -36,7 +36,7 @@
    - Sweep for dead code/assets via knip/depcheck/ts-prune; clean env vars, lockfiles, docs. Harden security headers, add DX files (.editorconfig, .nvmrc, etc.).
 
 ## Risks & Dependencies
-- **Missing logo asset**: cannot sample accent automatically; fallback color in use until asset provided.
+- **Logo asset supplied**: `public/logo/mark.svg` defines the accent gradient for the system.
 - **Content volume**: Destinations + MICE subpages require structured data modeling to avoid monolithic pages.
 - **Analytics credentials**: GA4 / SMTP / CAPTCHA env secrets must be provided for production (mock locally).
 - **Legacy routes**: Need careful redirects / sitemap updates to avoid SEO regressions when removing event pages.

@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 
+import { StructuredData } from '@/components/StructuredData'
+
 import { siteConfig } from '@/lib/config/site'
 import { buildBreadcrumbSchema, buildMetadata } from '@/lib/seo'
 
@@ -48,11 +50,7 @@ export default function ReferencesPage() {
         </div>
       </section>
 
-      <script
-        type="application/ld+json"
-        suppressHydrationWarning
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
-      />
+      <StructuredData data={breadcrumb} />
     </div>
   )
 }

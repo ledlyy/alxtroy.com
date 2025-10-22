@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 
+import { StructuredData } from '@/components/StructuredData'
+
 import { siteConfig } from '@/lib/config/site'
 import { buildBreadcrumbSchema, buildMetadata } from '@/lib/seo'
 
@@ -55,7 +57,7 @@ export default function MicePage() {
     <div className="space-y-12 pb-20">
       <section className="container mx-auto px-4">
         <div className="rounded-3xl border bg-surface px-8 py-12 shadow-soft">
-          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-accent/80">MICE</p>
+          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-accent-700">MICE</p>
           <h1 className="mt-4 text-4xl font-semibold text-foreground">Meetings, Incentives, Conferences and Exhibitions</h1>
           <p className="mt-6 text-base text-muted">
             “Meetings, Incentives, Conferences and Exhibitions” describes large-scale programmes planned with purpose. Alexander and Troy Tours combines local expertise with logistical precision to deliver these experiences throughout the Americas.
@@ -72,11 +74,7 @@ export default function MicePage() {
         ))}
       </section>
 
-      <script
-        type="application/ld+json"
-        suppressHydrationWarning
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
-      />
+      <StructuredData data={breadcrumb} />
     </div>
   )
 }

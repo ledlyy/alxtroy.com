@@ -55,6 +55,7 @@ export const siteConfig = {
     { label: 'About', href: '/about' },
     { label: 'Services', href: '/services' },
     { label: 'MICE', href: '/mice' },
+    { label: 'Events', href: '/events' },
     { label: 'Destinations', href: '/destinations' },
     { label: 'Gallery', href: '/gallery' },
     { label: 'References', href: '/references' },

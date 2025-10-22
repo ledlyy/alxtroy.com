@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 
+import { StructuredData } from '@/components/StructuredData'
+
 import { siteConfig } from '@/lib/config/site'
 import { buildBreadcrumbSchema, buildMetadata } from '@/lib/seo'
 
@@ -22,7 +24,7 @@ export default function ServicesPage() {
     <div className="space-y-12 pb-20">
       <section className="container mx-auto px-4">
         <div className="rounded-3xl border bg-surface px-8 py-12 shadow-soft">
-          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-accent/80">Services</p>
+          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-accent-700">Services</p>
           <h1 className="mt-4 text-4xl font-semibold text-foreground">Alexander and Troy Tours Receptive Services</h1>
           <p className="mt-6 text-base text-muted">
             As the premiere receptive service company in the USA, Alexander and Troy Tours provides tailor-made solutions across transportation, accommodation, meetings, incentives and travel logistics. The following overview captures the services available to partners and clients.
@@ -47,11 +49,7 @@ export default function ServicesPage() {
         ))}
       </section>
 
-      <script
-        type="application/ld+json"
-        suppressHydrationWarning
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
-      />
+      <StructuredData data={breadcrumb} />
     </div>
   )
 }

@@ -46,12 +46,24 @@ function ensureDataLayer() {
   }
 }
 
+function getCspNonce(): string | undefined {
+  if (!isBrowser()) return undefined
+  const doc = document.documentElement
+  if (!doc) return undefined
+  return doc.dataset.cspNonce || doc.getAttribute('data-csp-nonce') || undefined
+}
+
 function loadScript() {
   if (!isBrowser() || isInitialized || !MEASUREMENT_ID) return
   ensureDataLayer()
   const script = document.createElement('script')
   script.src = `https://www.googletagmanager.com/gtag/js?id=${MEASUREMENT_ID}`
   script.async = true
+  const nonce = getCspNonce()
+  if (nonce) {
+    script.nonce = nonce
+  }
+  script.referrerPolicy = 'strict-origin-when-cross-origin'
   document.head.appendChild(script)
   isInitialized = true
   window.gtag?.('js', new Date())

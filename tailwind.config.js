@@ -32,6 +32,11 @@ module.exports = {
         'primary-foreground': 'rgb(var(--accent-fg) / <alpha-value>)',
         accent: 'rgb(var(--accent) / <alpha-value>)',
         'accent-foreground': 'rgb(var(--accent-fg) / <alpha-value>)',
+        'accent-700': 'rgb(var(--accent-700) / <alpha-value>)',
+        'accent-600': 'rgb(var(--accent-600) / <alpha-value>)',
+        'accent-500': 'rgb(var(--accent-500) / <alpha-value>)',
+        'accent-400': 'rgb(var(--accent-400) / <alpha-value>)',
+        'accent-muted': 'rgb(var(--accent-muted) / <alpha-value>)',
         link: 'rgb(var(--link) / <alpha-value>)',
         success: 'rgb(var(--success) / <alpha-value>)',
         warning: 'rgb(var(--warning) / <alpha-value>)',
@@ -75,6 +80,5 @@ module.exports = {
   plugins: [
     require('@tailwindcss/typography'),
     require('@tailwindcss/forms'),
-    require('@tailwindcss/line-clamp'),
   ],
 }
