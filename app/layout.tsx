@@ -243,8 +243,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://www.google-analytics.com" crossOrigin="anonymous" />
         <link rel="preload" as="style" href="/styles/app.css" />
-        <style nonce={nonce ?? undefined} dangerouslySetInnerHTML={{ __html: criticalCss }} />
-        <script nonce={nonce ?? undefined} dangerouslySetInnerHTML={{ __html: loadNonCriticalCssScript }} />
+        <style nonce={nonce ?? undefined}>{criticalCss}</style>
+        <script nonce={nonce ?? undefined}>{loadNonCriticalCssScript}</script>
         <noscript>
           <link rel="stylesheet" href="/styles/app.css" />
         </noscript>
