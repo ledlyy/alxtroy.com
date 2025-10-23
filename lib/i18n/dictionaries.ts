@@ -6,6 +6,9 @@ const en: Dict = {
   'common.skip_to_content': 'Skip to content',
   'header.contact': 'Contact us',
   'header.toggle_theme': 'Toggle theme',
+  'header.language': 'Language',
+  'header.request_proposal': 'Request a proposal',
+  'header.call_us': 'Call us',
 
   'footer.navigate': 'Navigate',
   'footer.services': 'Services',
@@ -20,6 +23,9 @@ const tr: Dict = {
   'common.skip_to_content': 'İçeriğe geç',
   'header.contact': 'Bize ulaşın',
   'header.toggle_theme': 'Temayı değiştir',
+  'header.language': 'Dil',
+  'header.request_proposal': 'Teklif talep et',
+  'header.call_us': 'Bizi arayın',
 
   'footer.navigate': 'Gezin',
   'footer.services': 'Hizmetler',

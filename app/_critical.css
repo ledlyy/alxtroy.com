@@ -63,6 +63,14 @@ a {
   border-radius: 0.75rem;
 }
 
+.critical-header-top {
+  display: none;
+}
+
+.critical-header-top-inner {
+  display: none;
+}
+
 .critical-hero {
   margin: 0 auto;
   max-width: 1200px;
@@ -148,6 +156,31 @@ a {
 }
 
 @media (min-width: 768px) {
+  .critical-header-top {
+    display: block;
+    background: rgba(246, 248, 252, 0.95);
+    border-bottom: 1px solid rgba(214, 221, 235, 0.4);
+    backdrop-filter: blur(18px);
+  }
+
+  .critical-header-top-inner {
+    margin: 0 auto;
+    max-width: 1200px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem 1.5rem;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: rgba(15, 23, 42, 0.72);
+  }
+
+  .critical-header-top-inner a {
+    color: rgba(15, 23, 42, 0.85);
+  }
+
   .critical-hero-actions {
     flex-direction: row;
     align-items: center;
