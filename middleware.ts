@@ -1,7 +1,5 @@
 import { NextResponse, type NextRequest } from 'next/server'
 
-import { logRequest, logResponse } from './lib/logger'
-
 function generateNonce() {
   // randomUUID is supported in Edge runtime and sufficient for nonce
   return crypto.randomUUID().replace(/-/g, '')
@@ -17,16 +15,11 @@ export function middleware(req: NextRequest) {
 
   const url = new URL(req.url)
 
-  // Log incoming request
-  logRequest({
-    method: req.method,
-    url: url.pathname + url.search,
-    headers: {
-      'user-agent': req.headers.get('user-agent') || 'unknown',
-      'referer': req.headers.get('referer') || undefined,
-    },
-    ip: req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip') || 'unknown',
-  })
+  // Note: Logging disabled in middleware (Edge Runtime limitation)
+  // Log incoming request in API routes instead
+  if (process.env.NODE_ENV === 'development') {
+    console.log(`[Middleware] ${req.method} ${url.pathname}`)
+  }
 
   const res = NextResponse.next({ request: { headers: requestHeaders } })
 
@@ -76,13 +69,11 @@ export function middleware(req: NextRequest) {
   res.headers.set('X-Frame-Options', isPdf ? 'SAMEORIGIN' : 'DENY')
   res.headers.set('Permissions-Policy', 'geolocation=(), camera=(), microphone=(), interest-cohort=()')
 
-  // Log response
-  const duration = Date.now() - startTime
-  logResponse(
-    { method: req.method, url: url.pathname + url.search },
-    { status: res.status },
-    duration
-  )
+  // Note: Response logging disabled (Edge Runtime limitation)
+  if (process.env.NODE_ENV === 'development') {
+    const duration = Date.now() - startTime
+    console.log(`[Middleware] ${res.status} in ${duration}ms`)
+  }
 
   return res
 }

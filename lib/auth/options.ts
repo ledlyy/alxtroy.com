@@ -1,5 +1,6 @@
 import type { NextAuthOptions } from 'next-auth'
 import type { Account, Profile } from 'next-auth'
+import CredentialsProvider from 'next-auth/providers/credentials'
 import GithubProvider from 'next-auth/providers/github'
 
 import { auditLog } from '@/lib/admin/audit'
@@ -35,6 +36,55 @@ function extractAccessToken(account: Account | null | undefined): string | undef
 
 export const authOptions: NextAuthOptions = {
   providers: [
+    CredentialsProvider({
+      id: 'credentials',
+      name: 'Admin Login',
+      credentials: {
+        username: { label: 'Username', type: 'text', placeholder: 'admin' },
+        password: { label: 'Password', type: 'password' },
+      },
+      authorize(credentials) {
+        if (!credentials?.username || !credentials?.password) {
+          return null
+        }
+
+        const adminUsername = process.env.ADMIN_USERNAME
+        const adminPassword = process.env.ADMIN_PASSWORD
+
+        if (!adminUsername || !adminPassword) {
+          console.error('Admin credentials not configured in environment variables')
+          return null
+        }
+
+        // Simple but secure credential check
+        if (credentials.username === adminUsername && credentials.password === adminPassword) {
+          auditLog({
+            action: 'admin_login',
+            userId: credentials.username,
+            resource: 'admin_panel',
+            details: { provider: 'credentials' },
+            status: 'success',
+          })
+
+          return {
+            id: credentials.username,
+            name: credentials.username,
+            email: `${credentials.username}@admin.local`,
+            login: credentials.username,
+          }
+        }
+
+        auditLog({
+          action: 'failed_login_attempt',
+          userId: credentials.username,
+          resource: 'admin_panel',
+          details: { provider: 'credentials', reason: 'invalid_credentials' },
+          status: 'failure',
+        })
+
+        return null
+      },
+    }),
     GithubProvider({
       clientId: adminConfig.github.clientId,
       clientSecret: adminConfig.github.clientSecret,
@@ -47,6 +97,11 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async signIn({ user, account, profile }) {
+      // Skip additional checks for credentials provider (already verified in authorize)
+      if (account?.provider === 'credentials') {
+        return true
+      }
+
       const profileLogin = extractLogin(profile)
       const accountLogin = extractAccountId(account)
       const emailLogin = typeof user.email === 'string' ? user.email.split('@')[0]?.toLowerCase() : undefined
@@ -115,6 +170,16 @@ export const authOptions: NextAuthOptions = {
     jwt({ token, user, account, profile }) {
       if (user) {
         const tokenRecord = token as Record<string, unknown>
+
+        // For credentials provider
+        if (account?.provider === 'credentials') {
+          const userRecord = user as typeof user & { login?: string }
+          tokenRecord.userId = user.email || user.id
+          tokenRecord.login = userRecord.login || user.name || user.id
+          return token
+        }
+
+        // For GitHub provider
         if (typeof user.email === 'string') {
           tokenRecord.userId = user.email
         }

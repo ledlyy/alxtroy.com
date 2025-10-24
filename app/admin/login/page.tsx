@@ -3,10 +3,11 @@
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { signIn, useSession } from 'next-auth/react'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 const ERROR_MESSAGES: Record<string, string> = {
     AccessDenied: 'Access denied. You must be an authorized administrator with GitHub 2FA enabled and repository access.',
+    CredentialsSignin: 'Invalid username or password. Please try again.',
 }
 
 export default function AdminLoginPage() {
@@ -15,11 +16,40 @@ export default function AdminLoginPage() {
     const searchParams = useSearchParams()
     const error = searchParams?.get('error')
 
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
+    const [isLoading, setIsLoading] = useState(false)
+    const [loginError, setLoginError] = useState('')
+
     useEffect(() => {
         if (status === 'authenticated') {
             router.replace('/admin/dashboard')
         }
     }, [status, router])
+
+    const handleCredentialsSignIn = async (e: React.FormEvent) => {
+        e.preventDefault()
+        setIsLoading(true)
+        setLoginError('')
+
+        try {
+            const result = await signIn('credentials', {
+                username,
+                password,
+                redirect: false,
+            })
+
+            if (result?.error) {
+                setLoginError('Invalid username or password')
+            } else if (result?.ok) {
+                router.push('/admin/dashboard')
+            }
+        } catch {
+            setLoginError('An error occurred. Please try again.')
+        } finally {
+            setIsLoading(false)
+        }
+    }
 
     const handleGitHubSignIn = () => {
         void signIn('github', { callbackUrl: '/admin/dashboard' })
@@ -55,20 +85,73 @@ export default function AdminLoginPage() {
                     </div>
 
                     <div className="space-y-6 px-8 py-10">
-                        {error && (
+                        {(error || loginError) && (
                             <div className="rounded-2xl border border-danger/30 bg-danger/10 p-4 text-left">
                                 <p className="text-sm font-semibold text-danger">Authentication failed</p>
                                 <p className="mt-1 text-xs text-danger/90">
-                                    {ERROR_MESSAGES[error] ?? 'An error occurred during sign-in. Please try again.'}
+                                    {loginError || ERROR_MESSAGES[error || ''] || 'An error occurred during sign-in. Please try again.'}
                                 </p>
                             </div>
                         )}
 
+                        {/* Quick Login Form */}
+                        <form onSubmit={(e) => void handleCredentialsSignIn(e)} className="space-y-4">
+                            <div>
+                                <label htmlFor="username" className="mb-2 block text-sm font-medium text-foreground">
+                                    Username
+                                </label>
+                                <input
+                                    id="username"
+                                    type="text"
+                                    value={username}
+                                    onChange={(e) => setUsername(e.target.value)}
+                                    placeholder="admin"
+                                    required
+                                    className="w-full rounded-xl border border-border/50 bg-background/80 px-4 py-3 text-sm text-foreground placeholder:text-muted focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20"
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="password" className="mb-2 block text-sm font-medium text-foreground">
+                                    Password
+                                </label>
+                                <input
+                                    id="password"
+                                    type="password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    placeholder="••••••••"
+                                    required
+                                    className="w-full rounded-xl border border-border/50 bg-background/80 px-4 py-3 text-sm text-foreground placeholder:text-muted focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20"
+                                />
+                            </div>
+                            <button
+                                type="submit"
+                                disabled={isLoading || status === 'loading'}
+                                className="btn-primary flex w-full items-center justify-center gap-3"
+                            >
+                                <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                                </svg>
+                                <span>{isLoading ? 'Signing in...' : 'Sign in'}</span>
+                            </button>
+                        </form>
+
+                        {/* Divider */}
+                        <div className="relative">
+                            <div className="absolute inset-0 flex items-center">
+                                <div className="w-full border-t border-border/40"></div>
+                            </div>
+                            <div className="relative flex justify-center text-xs uppercase">
+                                <span className="bg-surface px-2 text-muted">Or continue with</span>
+                            </div>
+                        </div>
+
+                        {/* GitHub Login */}
                         <button
                             type="button"
                             onClick={handleGitHubSignIn}
                             disabled={status === 'loading'}
-                            className="btn-primary flex w-full items-center justify-center gap-3 bg-[#24292e] text-white hover:bg-[#1b1f23]"
+                            className="btn-secondary flex w-full items-center justify-center gap-3 bg-[#24292e] text-white hover:bg-[#1b1f23]"
                         >
                             <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                                 <path
@@ -81,11 +164,11 @@ export default function AdminLoginPage() {
                         </button>
 
                         <div className="rounded-2xl border border-border/50 bg-background/60 p-4 text-xs text-muted">
-                            <p className="font-semibold text-foreground">Security requirements</p>
+                            <p className="font-semibold text-foreground">Quick Login Credentials</p>
                             <ul className="mt-3 space-y-1">
-                                <li>✓ GitHub account with two-factor authentication</li>
-                                <li>✓ Collaborator access to the repository</li>
-                                <li>✓ Added to `ADMIN_GITHUB_USERS` allowlist</li>
+                                <li>✓ Username: admin</li>
+                                <li>✓ Password: Set in environment variables</li>
+                                <li>✓ No external dependencies</li>
                             </ul>
                         </div>
                     </div>

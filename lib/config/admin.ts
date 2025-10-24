@@ -13,11 +13,23 @@ export const adminConfig = {
         token: process.env.GITHUB_TOKEN!,
     },
 
-    // Authorized Admin Users (GitHub usernames)
-    authorizedUsers: process.env.ADMIN_GITHUB_USERS
-        ?.split(',')
-        .map(u => u.trim().toLowerCase())
-        .filter(Boolean) || [],
+    // Authorized Admin Users (GitHub usernames + credential fallback)
+    authorizedUsers: (() => {
+        const authorized = new Set<string>()
+
+        process.env.ADMIN_GITHUB_USERS
+            ?.split(',')
+            .map(u => u.trim().toLowerCase())
+            .filter(Boolean)
+            .forEach(user => authorized.add(user))
+
+        const credentialUser = process.env.ADMIN_USERNAME?.trim().toLowerCase()
+        if (credentialUser) {
+            authorized.add(credentialUser)
+        }
+
+        return Array.from(authorized)
+    })(),
 
     // Session Configuration
     session: {
